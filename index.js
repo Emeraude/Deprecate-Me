@@ -9,12 +9,17 @@ try {
     version = process.env.npm_package_version;
 }
 
+function thumbprint(elem) {
+    return elem.file + ':' + elem.function + ':' + elem.line + ':' + elem.column;
+}
+
 module.exports = function(opt) {
     var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(stack(1).function) + '" is deprecated';
 
+    thumbprint(stack(1));
     if (opt) {
 	if (opt.printOnce !== false
-	    && printed[stack(1).function] == true)
+	    && printed[thumbprint(stack(1))] == true)
 	    return;
 	if (opt.since)
 	    msg += ' since ' + color.yellow(opt.since);
@@ -28,8 +33,8 @@ module.exports = function(opt) {
 	if (opt.message)
 	    msg += '\n' + color.magenta.bold('---------> ') + opt.message;
     }
-    else if (printed[stack(1).function] == true)
+    else if (printed[thumbprint(stack(1))] == true)
 	return;
-    printed[stack(1).function] = true;
+    printed[thumbprint(stack(1))] = true;
     console.warn(msg);
 }
