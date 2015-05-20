@@ -16,7 +16,6 @@ function thumbprint(elem) {
 module.exports = function(opt) {
     var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(stack(1).function) + '" is deprecated';
 
-    thumbprint(stack(1));
     if (opt) {
 	if (opt.printOnce !== false
 	    && printed[thumbprint(stack(1))] == true)
