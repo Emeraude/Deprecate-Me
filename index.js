@@ -3,16 +3,14 @@ var printed = {};
 require('./get_function_name');
 
 var version;
-if (!(version = process.env.npm_package_version)) {
-    try {
-	version = require('../../package.json').version;
-    } catch(e) {
-	;
-    }
+try {
+    version = require('../../package.json').version;
+} catch(e) {
+    version = process.env.npm_package_version;
 }
 
 module.exports = function(opt) {
-    var msg = color.magenta('DEPRECATED') + ' Function "' + __parent_function + '" is deprecated';
+    var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(__parent_function) + '" is deprecated';
 
     if (opt) {
 	if (opt.printOnce !== false
