@@ -1,6 +1,6 @@
 var color = require('cli-color');
+var stack = require('stack-infos');
 var printed = {};
-require('./get_function_name');
 
 var version;
 try {
@@ -10,11 +10,11 @@ try {
 }
 
 module.exports = function(opt) {
-    var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(__parent_function) + '" is deprecated';
+    var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(stack(1).function) + '" is deprecated';
 
     if (opt) {
 	if (opt.printOnce !== false
-	    && printed[__parent_function] == true)
+	    && printed[stack(1).function] == true)
 	    return;
 	if (opt.since)
 	    msg += ' since ' + color.yellow(opt.since);
@@ -28,8 +28,8 @@ module.exports = function(opt) {
 	if (opt.message)
 	    msg += '\n' + color.magenta.bold('---------> ') + opt.message;
     }
-    else if (printed[__parent_function] == true)
+    else if (printed[stack(1).function] == true)
 	return;
-    printed[__parent_function] = true;
+    printed[stack(1).function] = true;
     console.warn(msg);
 }
