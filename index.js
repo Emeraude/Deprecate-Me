@@ -22,18 +22,24 @@ module.exports = function(opt) {
 	    return;
 	if (opt.since)
 	    msg += ' since ' + color.yellow(opt.since);
+	msg += '.';
 	if (opt.current)
 	    version = opt.current;
 	if (opt.removed) {
-	    msg += '. It will be removed in ' + color.yellow(opt.removed);
+	    msg += ' It will be removed in ' + color.yellow(opt.removed);
 	    if (version)
 		msg += ' (current is ' + color.yellow(version) + ')';
+	    msg += '.';
 	}
+	if (opt.replaceBy)
+	    msg += ' You should use ' + color.yellow.bold('"' + opt.replaceBy + '"') + ' instead.';
 	if (opt.message)
-	    msg += '\n' + color.magenta.bold('---------> ') + opt.message;
+	    msg += '\n' + color.magenta.bold('---------> ') + opt.message + '.';
     }
     else if (printed[thumbprint(stack(1))] == true)
 	return;
+    else
+	msg += '.';
     printed[thumbprint(stack(1))] = true;
     console.warn(msg);
 }

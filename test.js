@@ -11,7 +11,7 @@ function since() {
 }
 
 function remove() {
-    deprecate({removed: '1.0.0'});
+    deprecate({removed: '2.0.0'});
 }
 
 function printSeveral() {
@@ -19,11 +19,15 @@ function printSeveral() {
 }
 
 function withMessage() {
-    deprecate({message: "You should use console.log instead"});
+    deprecate({message: 'You should use console.log instead'});
+}
+
+function useInstead() {
+    deprecate({replaceBy: 'replaceBy'});
 }
 
 function all() {
-    deprecate({since: '0.2.5', removed: '1.0.0', current: '0.8.0', message: "You should avoid it"});
+    deprecate({since: '0.2.5', removed: '1.0.0', current: '0.8.0', replaceBy: 'none', message: 'You should avoid it'});
 }
 
 std();
@@ -33,5 +37,6 @@ remove();
 printSeveral();
 printSeveral();
 withMessage();
+useInstead();
 all();
 all();

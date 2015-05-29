@@ -27,6 +27,7 @@ Several options can be used trought a simple javascript object:
 	current: '0.8.0', // Change value of current version manually
 	printOnce: false, // By default, a message is called only the first time you call the function
 	// You can avoid this behaviour with this argument
+	replaceBy: "toto" // the name of the function you should use instead of the deprecated function
 	message: "It's really bad" // This message will be printed in a new line
 }
 ```
