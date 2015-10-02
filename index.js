@@ -2,18 +2,17 @@ var color = require('cli-color');
 var stack = require('stack-infos');
 var printed = {};
 
-try {
-  version = require('../../package.json').version;
-} catch(e) {
-  version = process.env.npm_package_version;
-}
-
 function thumbprint(elem) {
   return elem.file + ':' + elem.function + ':' + elem.line + ':' + elem.column;
 }
 
 module.exports = function(opt) {
   var version;
+  try {
+    version = require('../../package.json').version;
+  } catch(e) {
+    version = process.env.npm_package_version;
+  }
   var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(stack(1).function) + '" is deprecated';
 
   if (opt) {
