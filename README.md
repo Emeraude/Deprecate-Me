@@ -22,6 +22,7 @@ Several options can be used trought a simple javascript object:
 ```javascript
 {
 	since: '0.2.5', // The function is deprecated since version 0.2.5
+	name: 'renamedFunction', // Default is the name of the function where deprecate() is called
 	removed: '1.0.0', // The function will be removed in version 1.0.0
 	// Note that it will also display the current version, if it can detect it
 	current: '0.8.0', // Change value of current version manually

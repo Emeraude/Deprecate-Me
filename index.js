@@ -13,7 +13,7 @@ module.exports = function(opt) {
   } catch(e) {
     version = process.env.npm_package_version;
   }
-  var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(stack(1).function) + '" is deprecated';
+  var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(opt && opt.name ? opt.name : stack(1).function) + '" is deprecated';
 
   if (opt) {
     if (opt.printOnce !== false
