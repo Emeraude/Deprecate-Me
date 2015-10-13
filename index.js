@@ -1,3 +1,4 @@
+var path = require('path');
 var color = require('cli-color');
 var stack = require('stack-infos');
 var printed = {};
@@ -9,9 +10,15 @@ function thumbprint(elem) {
 module.exports = function(opt) {
   var version;
   try {
-    version = require('../../package.json').version;
+    var dirModule = stack(1).dir.split(/\/node_modules\//)[1].split('/')[0];
+    version = require(path.join('..', dirModule, 'package.json')).version;
   } catch(e) {
-    version = process.env.npm_package_version;
+    try {
+      // for npm < 3.x
+      version = require('../../package.json').version;
+    } catch(e) {
+      version = process.env.npm_package_version;
+    }
   }
   var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(opt && opt.name ? opt.name : stack(1).function) + '" is deprecated';
 
