@@ -14,6 +14,7 @@ npm install deprecate-me
 var deprecate = require('deprecate-me');
 function test() {
 	deprecate(); // A warning will be printed when function test will be called for the first time
+	console.warn(deprecate.str()); // Return the warning as a string, that you could display later
 }
 ```
 
@@ -32,6 +33,10 @@ Several options can be used trought a simple javascript object:
 	message: "It's really bad" // This message will be printed in a new line
 }
 ```
+
+## Examples
+
+Some examples are available in `example.js`.
 
 ### Author
 

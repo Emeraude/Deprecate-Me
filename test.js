@@ -20,7 +20,7 @@ exports.since = function(test) {
 }
 
 exports.remove = function(test) {
-  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.remove') + '" is deprecated. It will be removed in ' + color.yellow('2.0.0') + ' (current is ' + color.yellow('1.3.1') + ').', deprecate.str({removed: '2.0.0'}));
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.remove') + '" is deprecated. It will be removed in ' + color.yellow('2.0.0') + ' (current is ' + color.yellow('1.4.0') + ').', deprecate.str({removed: '2.0.0'}));
   test.done();
 }
 
@@ -36,7 +36,7 @@ exports.replaceBy = function(test) {
 
 exports.multiple = function(test) {
   test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.multiple') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('0.8.0') + ').', deprecate.str({since: '0.2.5', current: '0.8.0', removed: '1.0.0'}));
-  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('multiple') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('1.3.1') + ').', deprecate.str({since: '0.2.5', removed: '1.0.0', name: 'multiple'}));
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('multiple') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('1.4.0') + ').', deprecate.str({since: '0.2.5', removed: '1.0.0', name: 'multiple'}));
   test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('all') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('0.8.0') + '). You should use ' + color.yellow.bold('"none"') + ' instead.\n' + color.magenta.bold('--------->') + ' You should avoid it.', deprecate.str({since: '0.2.5', removed: '1.0.0', current: '0.8.0', name: 'all', replaceBy: 'none', message: 'You should avoid it'}));
   test.done();
 }
