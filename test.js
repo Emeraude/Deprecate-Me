@@ -1,47 +1,42 @@
-#!/usr/bin/env node
+#!/usr/bin/env nodeunit
 
-var deprecate = require('./index.js');
+var color = require('cli-color');
+var deprecate = require('.');
 
-function std() {
-  deprecate();
+/* TODO : test for printOnce and printSeveral */
+exports.basic = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.basic') + '" is deprecated.', deprecate.str());
+  test.done();
 }
 
-function toto() {
-  deprecate({name: 'renamed'});
+exports.renamed = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('renamed') + '" is deprecated.', deprecate.str({name: 'renamed'}));
+  test.done();
 }
 
-function since() {
-  deprecate({since: '0.2.5'});
+exports.since = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.since') + '" is deprecated since ' + color.yellow('0.2.5') + '.', deprecate.str({since: '0.2.5'}));
+  test.done();
 }
 
-function remove() {
-  deprecate({removed: '2.0.0'});
+exports.remove = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.remove') + '" is deprecated. It will be removed in ' + color.yellow('2.0.0') + ' (current is ' + color.yellow('1.3.1') + ').', deprecate.str({removed: '2.0.0'}));
+  test.done();
 }
 
-function printSeveral() {
-  deprecate({printOnce: false});
+exports.withMessage = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.withMessage') + '" is deprecated.\n' + color.magenta.bold('--------->') + ' You should use console.log instead.', deprecate.str({message: 'You should use console.log instead'}));
+  test.done();
 }
 
-function withMessage() {
-  deprecate({message: 'You should use console.log instead'});
+exports.replaceBy = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.replaceBy') + '" is deprecated. You should use ' + color.yellow.bold('"replaceBy"') + ' instead.', deprecate.str({replaceBy: 'replaceBy'}));
+  test.done();
 }
 
-function useInstead() {
-  deprecate({replaceBy: 'replaceBy'});
+exports.multiple = function(test) {
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('exports.multiple') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('0.8.0') + ').', deprecate.str({since: '0.2.5', current: '0.8.0', removed: '1.0.0'}));
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('multiple') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('1.3.1') + ').', deprecate.str({since: '0.2.5', removed: '1.0.0', name: 'multiple'}));
+  test.equal(color.magenta('DEPRECATED') + ' Function "' + color.bold('all') + '" is deprecated since ' + color.yellow('0.2.5') + '. It will be removed in ' + color.yellow('1.0.0') + ' (current is ' + color.yellow('0.8.0') + '). You should use ' + color.yellow.bold('"none"') + ' instead.\n' + color.magenta.bold('--------->') + ' You should avoid it.', deprecate.str({since: '0.2.5', removed: '1.0.0', current: '0.8.0', name: 'all', replaceBy: 'none', message: 'You should avoid it'}));
+  test.done();
 }
-
-function all() {
-  deprecate({since: '0.2.5', removed: '1.0.0', current: '0.8.0', replaceBy: 'none', message: 'You should avoid it'});
-}
-
-std();
-std();
-toto();
-since();
-remove();
-printSeveral();
-printSeveral();
-withMessage();
-useInstead();
-all();
-all();
