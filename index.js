@@ -7,10 +7,10 @@ function thumbprint(elem) {
   return elem.file + ':' + elem.function + ':' + elem.line + ':' + elem.column;
 }
 
-module.exports = function(opt) {
+function str(opt) {
   var version;
   try {
-    var dirModule = stack(1).dir.split(/\/node_modules\//)[1].split('/')[0];
+    var dirModule = stack(2).dir.split('/node_modules/')[1].split('/')[0];
     version = require(path.join('..', dirModule, 'package.json')).version;
   } catch(e) {
     try {
@@ -20,12 +20,12 @@ module.exports = function(opt) {
       version = process.env.npm_package_version;
     }
   }
-  var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(opt && opt.name ? opt.name : stack(1).function) + '" is deprecated';
+  var msg = color.magenta('DEPRECATED') + ' Function "' + color.bold(opt && opt.name ? opt.name : stack(2).function) + '" is deprecated';
 
   if (opt) {
     if (opt.printOnce !== false
-	&& printed[thumbprint(stack(1))] == true)
-      return;
+	&& printed[thumbprint(stack(2))] == true)
+      return null;
     if (opt.since)
       msg += ' since ' + color.yellow(opt.since);
     msg += '.';
@@ -40,12 +40,22 @@ module.exports = function(opt) {
     if (opt.replaceBy)
       msg += ' You should use ' + color.yellow.bold('"' + opt.replaceBy + '"') + ' instead.';
     if (opt.message)
-      msg += '\n' + color.magenta.bold('---------> ') + opt.message + '.';
+      msg += '\n' + color.magenta.bold('--------->') + ' ' + opt.message + '.';
   }
-  else if (printed[thumbprint(stack(1))] == true)
-    return;
+  else if (printed[thumbprint(stack(2))] == true)
+    return null;
   else
     msg += '.';
-  printed[thumbprint(stack(1))] = true;
-  console.warn(msg);
+  printed[thumbprint(stack(2))] = true;
+  return msg;
+}
+
+module.exports = function(opt) {
+  var msg = str(opt);
+  if (msg)
+    console.warn(msg);
+}
+
+module.exports.str = function(opt) {
+  return str(opt);
 }
